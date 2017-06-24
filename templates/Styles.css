@@ -1,0 +1,27 @@
+body, table, p, input, select {
+	font-family : Arial;
+	font-size:12px
+}
+.Theme {
+		background-color:#DDDDDD;
+		text-align:left;
+}
+a.Type,a.Type:link {
+		color:#0000AA;
+		text-decoration:none;
+}
+a.Type:hover {
+		color:#990066;
+		text-decoration:underline;
+}
+/*
+a.Type:visited {
+		color:#000e00;
+		text-decoration:none;
+}
+*/
+a.std {
+		color:#blue;
+		text-decoration:none;
+		font-weight:bold
+}

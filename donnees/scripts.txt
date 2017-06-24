@@ -1,0 +1,37 @@
+nom|valeur|page|calcul|type|description|autres
+DebutListe|<ul>|Accueil|Defaut|||
+ElementCalcul|<li> <a href="index.php?action=nouveau&type={calcul}" class="Type">{valeur}</a></li>|Accueil|Defaut||||
+FinListe|</ul>|Accueil|Defaut|||
+DebutTableDesc|<table cellpadding="0" class="TableNouveau" align="center" width="90%">|Nouveau|Defaut|Calcul||
+ligneDesc|<tr><td align="center" style="{style}">{valeur}</td></tr>|Nouveau|Defaut|Definition||
+FinTableDesc|</table>|Nouveau|Defaut|Calcul||
+ScriptVerif|<script src="add-ons/Calcul.js" type="text/javascript"></script><div id="Erreur"></div>|Nouveau|Defaut|Calcul||
+DebutForm|<form name="nouveau" action="index.php?action=resultats" method="post" onSubmit="return Verif()">|Nouveau|Defaut|Calcul||
+SuplInfos|<input type="hidden" name="type" value="{FormVars_type}" />|Nouveau|Defaut|Calcul||
+DebutTableForm|<table cellpadding="0" class="TableNouveau" align="center" width="90%">|Nouveau|Defaut|Calcul||
+ligneForm|<tr><td width="60%"><a title="{description}">{titre} (<font color="blue">{nom}</font>) </a></td><td>{form} {unite}</td></tr>|Nouveau|Defaut|Calcul||
+FinTableForm|</table>|Nouveau|Defaut|Calcul||
+DebutPara|<p align="center">|Nouveau|Defaut|Calcul||
+Btons|<img name="AnnulerVariables" value="Annuler" src="images/site/reset.gif" onclick="window.location='index.php?action=nouveau&type={FormVars_type}"/><input type="image" name="VoirResultats" value="Resultats" src="images/site/submit.gif" />|Nouveau|Defaut|Calcul||
+FinPara|</p>|Nouveau|Defaut|Calcul||
+FinForm|</form>|Nouveau|Defaut|Calcul||
+DebutFormCalc|<form name="calcul" action="index.php?action=sauve" method="post">|Resultats|Defaut|Operation||
+ValNomCalcFormCalc|<input type="hidden" name="type" value="{FormVars_type}" />|Resultats|Defaut|Operation||
+DebutTableCalcul|<table cellpadding="0" align="center" width="90%" border="1">|Resultats|Defaut|Calcul||
+TitresTableCalc|<tr><th colspan="2">CALCULS</Th></tr>|Resultats|Defaut|Operation||
+ligneCalc|<tr><td width="60%"><a title="{description}">{titre} (<font color="blue">{nom}</font>)</a></td><td>{valeur} {unite}<input type="hidden" value="{valeur}" name="{nom}" /></td></tr>|Resultats|Defaut|Calcul||
+FinTableCalc|</table><br />|Resultats|Defaut|Calcul||
+BtonsFormCalc|<table width="80%" align="center" border="1"><tr><td colspan="2" class="theme">Actions</td></tr><tr><td width="50%" align="center"><input type="submit" class="submit" value="R&eacute;sultats" onclick="return get_page('resultats')" /></td><td width="50%" align="center"><input type="submit" value="Sauvegarder" class="submit" onclick="return get_page('sauve')" /></td></tr></table>|Resultats|Defaut|Calcul||
+FinFormCalc|</form>|Resultats|Defaut|Calcul||
+DebutTableRes|<table cellpadding="0" class="TableNouveau" align="center" width="90%" border="1">|Resultats|Defaut|Operation||
+TitresTableRes|<tr><th colspan="2">RESULTATS</Th></tr>|Resultats|Defaut|Operation||
+ligneRes|<tr><td width="60%"><a title="{description}">{titre} <b>{nom}</b> : <br /><font color="blue">{expression}</font></a></td><td>{valeur} {unite}</td></tr>|Resultats|Defaut|Operation||
+FinTableRes|</table>|Resultats|Defaut|Operation||
+DebutTableCalcul|<table cellpadding="0" align="center" width="90%" border="1">|Sauvegarde|Defaut|Calcul||
+TitresTableCalc|<tr><th colspan="2">CALCULS</Th></tr>|Sauvegarde|Defaut|Operation||
+ligneCalc|<tr><td width="60%"><a title="{description}">{titre} (<b>{nom}</b>)</a></td><td>{valeur} {unite}</td></tr>|Sauvegarde|Defaut|Calcul||
+FinTableCalc|</table><br />|Sauvegarde|Defaut|Calcul||
+DebutTableRes|<table cellpadding="0" class="TableNouveau" align="center" width="90%" border="1">|Sauvegarde|Defaut|Operation||
+TitresTableRes|<tr><th colspan="2">RESULTATS</Th></tr>|Sauvegarde|Defaut|Operation||
+ligneRes|<tr><td width="60%"><a title="{description}">{titre} (<b>{nom}</b>)</td><td>{valeur} {unite}</td></tr>|Sauvegarde|Defaut|Operation||
+FinTableRes|</table>|Sauvegarde|Defaut|Operation||

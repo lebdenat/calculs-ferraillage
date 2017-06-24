@@ -1,0 +1,39 @@
+body, table, p, input, select {
+	font-family : Arial;
+	font-size:12px
+}
+.Theme {
+		background-image:url(images/BgTheme.gif);
+		text-align:left;
+}
+a.Type,a.Type:link {
+		color:#6F6148;
+		text-decoration:none;
+}
+a.Type:hover {
+		color:#990066;
+		text-decoration:underline;
+}
+/*
+a.Type:visited {
+		color:#000e00;
+		text-decoration:none;
+}
+*/
+a.std {
+		color:#907855;
+		text-decoration:none;
+		font-weight:bold;
+		font-size:14px
+}
+input {
+		border-top-color:#B6A364;
+		border-right-color:#B6A364;
+		border-bottom-color:#DCCEA1;
+		border-left-color:#DCCEA1;
+		border-width : 1, 1, 1, 1;
+		text-align:right;
+}
+.submit{
+	text-align:center
+}

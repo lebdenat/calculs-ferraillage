@@ -1,0 +1,237 @@
+nom|calcul|script|theme|titre|valeur|unite|autres
+Nu|Poteau|{Nu} = round (1.35*{G}+1.50*{Q}, 3) ;||Charge de calcul Nu (Effort ultime)||MN|
+u|Poteau|{u}= ( 2 * {a} ) + ( 2 * {b} );||P&eacute;rimetre de la section||m|
+i_mini|Poteau|{i_mini}= ({b} * pow({a},3))/12;||Moment quadratique de la section||m4|
+B|Poteau|{B}= {b} * {a};||Aire de la section||m²|
+Br|Poteau|{Br}= ({b}-0.02) * ({a}-0.02);||Aire de la section - 2 cm p&eacute;riph&eacute;rique|||
+Lf|Poteau|{Lf}= ({TypePot} == "non") ? 0.7*{Lo} : {Lo} ;||Longueur de flambement|||
+i|Poteau|if ({B} != 0) {i} = pow(({i_mini}/{B}), 0.5);||Rayon de giration|||
+Lambda|Poteau|{Lambda}=round ({Lf}/{i});||Elancement|||
+CtrlNu|Poteau|{CtrlNu} = ({Nu} < 70) ? "verifie" : "Non Conforme" ;||Controle : Elancement &gt; 70|||
+alpha|Poteau|if ({Lambda}<=50){{alpha}=(0.85/(1+(0.2*pow(({Lambda}/35),2))))/{K};}else{{alpha}=(0.60*pow((50/{Lambda}), 2))/{K};}||Coefficient d'elancement||cm2|
+As|Poteau|{As} = (1.15/{Acos})*(({Nu}/{alpha})-({Br}*{fc28})/(1.35))*10000 ;||Section th&eacute;orique d'acier||cm2|
+A_maxi|Poteau|{A_maxi} = 500 * {B};||Section maximale d'acier||cm2|
+Asc|Poteau|{Asc} = max(20*{B}, 4*{u}, {As});||Section de calcul minimal||cm2|
+CtrlAsc|Poteau|{CtrlAsc} = ({Asc} < {A_maxi}) ? "verifie" : "Non Conforme" ;||Control (Asc &gt; A_maxi)|||
+Nu|PoteauCirc|{Nu} =  round (1.35*{G}+1.50*{Q}, 3) ;||Charge de calcul Nu (Effort ultime)||MN|
+u|PoteauCirc|{u}= round (pi()*{D}, 2);||P&eacute;rimetre de la section||m|
+i_mini|PoteauCirc|{i_mini}= (pi()*pow({D}, 4)/64);||Moment quadratique de la section||m4|
+B|PoteauCirc|{B}= (pi()*pow({D}*0.5, 2));||Aire de la section||m²|
+Br|PoteauCirc|{Br}=(pi()*pow(({D}-0.02)*0.5, 2));||Aire de la section - 2 cm p&eacute;riph&eacute;rique|||
+Lf|PoteauCirc|{Lf}= ({TypePot} == "non") ? 0.7*{Lo} : {Lo};||Longueur de flambement|||
+i|PoteauCirc|if ({B} != 0) {i} = pow(({i_mini}/{B}), 0.5);||Rayon de giration|||
+Lambda|PoteauCirc|{Lambda}=round ({Lf}/{i}, 2);||Elancement|||
+CtrlNu|PoteauCirc|{CtrlNu} = ({Nu} < 70) ? "verifie" : "Non Conforme" ;||Controle : Elancement &gt; 70|||
+alpha|PoteauCirc|if ({Lambda}<=50){{alpha}=(0.85/(1+(0.2*pow(({Lambda}/35),2))))/{K};}else{{alpha}=(0.60*pow((50/{Lambda}), 2))/{K};}||Coefficient d'&eacute;lancement||cm2|
+As|PoteauCirc|{As} = ((1.15/{Fe})*(({Nu}/{alpha})-(({Br}*{Fcj})/1.35)))*10000;||Section th&eacute;orique d'acier||cm2|
+A_maxi|PoteauCirc|{A_maxi} = 500 * {B};||Section maximale d'acier||cm2|
+Asc|PoteauCirc|{Asc} = max(20*{B}, 4*{u}, {As});||Section de calcul minimal||cm2|
+CtrlAsc|PoteauCirc|{CtrlAsc} = ({Asc} < {A_maxi}) ? "verifie" : "Non Conforme" ;||Control (Asc &gt; A_maxi)|||
+abc|PoutreRectELS|{abc} = 0.6 * {fc28};|Calcul des contraintes admissibles|Contrainte de compression du b&eacute;ton|||
+ft28|PoutreRectELS|{ft28} = 0.6 + (0.06 * {fc28});|Calcul des contraintes admissibles|Contrainte limite de traction du b&eacute;ton|Calcul des contraintes admissibles||
+fist|PoutreRectELS|$FP = min (2*{Acos}/3, max({Acos}/2, 110*pow(({nu}*{ft28}), 0.5))) ; {fist} = ({TypeFis} == "FP") ? $FP : 0.8*$FP ; |Calcul des contraintes admissibles|Contrainte limite de traction des aciers|||
+alpha|PoutreRectELS|{alpha} = {abc} / ({abc}+{fist}/15);|Paramètres caract&eacute;ristiques de la section|Coefficient de la fibre neutre|||
+y|PoutreRectELS|{y} = {d} * {alpha};|Paramètres caract&eacute;ristiques de la section|Ordonn&eacute;e de la fibre neutre||m|
+Zb|PoutreRectELS|{Zb} = {d}-({y}/3);|Paramètres caract&eacute;ristiques de la section|Bras de l&eacute;vier du couple interne|||
+Mrbser|PoutreRectELS|{Mrbser} = 0.5*{abc}*{b}*{alpha}*(1-({alpha}/3))*pow({d}, 2);|Paramètres caract&eacute;ristiques de la section|Bras de l&eacute;vier du couple interne|||
+EtatLimite|PoutreRectELS|{EtatLimite} = ({Mrbser} > {Mser}) ? "Pas d'aciers comprim&eacute;s" : "Aciers comprim&eacute;s n&eacute;cessaires" ;|Paramètres caract&eacute;ristiques de la section|Etat limite de compression du b&eacute;ton||m|
+Ast|PoutreRectELS|{Ast} = ({EtatLimite}=="Pas d'aciers comprim&eacute;s") ? {Mser} / ({fist}*{Zb}) : (({Mrbser}/({fist}*{Zb}))+(({Mser}-{Mrbser})/({fist}*({d}-{dp}))))*10000;|D&eacute;termination des sections th&eacute;oriques d'aciers|Section des aciers tendus|||
+ChoixSectComm|PoutreRectELS|{ChoixSectComm} = "Indefini : Lit n 1; lit n 2; lit n 3???";|D&eacute;termination des sections th&eacute;oriques d'aciers|Choix d'une section commerciale||MN.m|
+rosc|PoutreRectELS|{rosc} = 15 * (({abc}*({y}-{dp}))/{y});|D&eacute;termination des sections th&eacute;oriques d'aciers|Section des aciers comprim&eacute;s|||
+Asc|PoutreRectELS|{Asc} = ({Mser}-{Mrbser})/({rosc}*({d}-{dp}))*10000 ;|D&eacute;termination des sections th&eacute;oriques d'aciers|Section des aciers comprim&eacute;s|||
+ChoixSectComp|PoutreRectELS|{ChoixSectComp} = "Indefini : Lit n 1; lit n 2; lit n 3???";|D&eacute;termination des sections th&eacute;oriques d'aciers|Choix d'une section comprim&eacute;s|||
+Ap|PoutreRectELS|if ({h} > 70){{Ap} = ({TypeFis}=="FP") ? "3 m2 par mètre de parement" : "5 m2 par mètre de parement" ;}else{{Ap}="&nbsp;";}|D&eacute;termination des sections th&eacute;oriques d'aciers|Aciers de peau|||
+Verif|PoutreRectELS|{Verif} = (({Mser}-{Mrbser})<(0.4*{Mser})) ? "verifi&eacute;" : "Non conforme";|D&eacute;termination des sections th&eacute;oriques d'aciers|Choix d'une section comprim&eacute;s|||
+Pw|PoutreCont|{Pw} = ({CoefG}*{G})+({CoefQ}*{Q});||Charge r&eacute;partie sur la trav&eacute;e 1||KN/ml|
+Pe|PoutreCont|{Pe} = ({CoefG}*{G})+({CoefQ}*{Q});||Charge r&eacute;partie sur la trav&eacute;e 2||KN/ml|
+Lpw|PoutreCont|{Lpw} = ({TypeTrav1}=="oui") ? {Lw} : {Lw}*0.8 ;||Longueur de calcul pour la trav&eacute;e 1||m|
+Lpe|PoutreCont|{Lpe} = ({TypeTrav2}=="oui") ? {Le} : {Le}*0.8 ;||Longueur de calcul pour la trav&eacute;e 2||m|
+MtApp|PoutreCont|{MtApp} = (({Pw}*pow({Lpw}, 3)+({Pe}*pow({Lpe},3)))/(8.5*({Lpw}+{Lpe})));||Moment appui central P2||KN.m|
+Rw|PoutreCont|{Rw} = (({Pw}*{Lw})/2)+(({Mw}-{MtApp})/{Lw});||Moment appui gauche P1||KN|
+Re|PoutreCont|{Re} = (({Pw}*{Lw})/2)+({MtApp}/{Lw});||Moment appui droite P3||KN|
+x|PoutreCont|{x} = {Rw} / {Pw};||Position du moment maxi dans la trav&eacute;e 1||KN|
+Mt1|PoutreCont|{Mt1} = -({Mw}) + (({Rw}*{x})-(({Pw}*pow({x}, 2))/2));||Moment maxi dans la trav&eacute;e 1||KN|
+Nu|Mur|{Nu} = 1.35*{G}+1.50*{Q} ;||Elancement (Effort ultime)||m|
+Br|Mur|{Br} = {a}-0.02 ;|Caract&eacute;ristiques de l'&eacute;tude|Calcul de la section de b&eacute;ton r&eacute;duite||m|
+Lf|Mur|{Lf} = ({MurRive} =="oui") ? 0.9*{Ht} : 0.85*{Ht} ;|Caract&eacute;ristiques de l'&eacute;tude|Longueur de flambement||m|
+lambda|Mur|{lambda} = (pow(12, 0.5)*{Lf})/{a} ;|Caract&eacute;ristiques de l'&eacute;tude|Elancement||m|
+alpha|Mur|{alpha} = 0.65 /((1+(0.2*pow(({lambda}/30), 2)))*{K}) ;|Caract&eacute;ristiques de l'&eacute;tude|Coefficient d'&eacute;lancement||m|
+Nu_lim|Mur|{Nu_lim} = {alpha}*{Br}*{Fc28}/1.35 ;|Caract&eacute;ristiques de l'&eacute;tude|Effort ultime limite||MN / ml|
+VerifCalcul|Mur|{VerifCalcul} = ({Nu}<{Nu_lim}) ? "Mur non arm&eacute;" : "Mur arm&eacute;" ;|Caract&eacute;ristiques de l'&eacute;tude|V&eacute;rification des conditions de calcul|||
+Lf1|Mur|{Lf1} = ({MurRive} =="oui") ? 0.85*{Ht} : 0.80*{Ht} ;|Calcul des caract&eacute;ristiques du mur|Longueur de flambement||m|
+lambda1|Mur|{lambda1} = (pow(12, 0.5)*{Lf1})/{a} ;|Calcul des caract&eacute;ristiques du mur|Elancement|||
+alpha1|Mur|{alpha1} = ({lambda1} < 50) ? 0.85/(1+(0.2*pow(({lambda1}/35), 2))*{K}) : 0.60*pow((50/{lambda1}),2) ;|Calcul des caract&eacute;ristiques du mur|Coefficient d'&eacute;lancement|||
+Nu_lim1|Mur|{Nu_lim1} = ({Nu}<{Nu_lim}) ? 0 : {alpha1}*{Br}*{Fc28}/1.35 ;|Calcul des caract&eacute;ristiques du mur|Effort ultime limite||MN / ml|
+Ascp|Mur|{Ascp} = (-0.85*(({alpha1}*{Br}*{Fc28})-(1.35*{Nu})))/({alpha1}*{FeE}) ;|Calcul des caract&eacute;ristiques du mur|V&eacute;rification des conditions de calcul||cm<sup>2</sup>/m|
+sigma_u|Mur|{sigma_u} = {Nu}/{a} ;|D&eacute;termination des pourcentages minimaux d'acier|Contrainte ultime du b&eacute;ton||MPa|
+sigma_u_lim|Mur|{sigma_u_lim} = {Nu_lim1}/{a} ;|D&eacute;termination des pourcentages minimaux d'acier|Contrainte limite ultime du b&eacute;ton||Mpa|
+theta|Mur|{theta} = ({MurRive} == "oui") ? 1 : 1.4 ;|D&eacute;termination des pourcentages minimaux d'acier|Coefficient t|||
+rov|Mur|{rov} = max (0.001*{a}, (((0.6*{a}*{theta})/{FeE})*((3*{sigma_u}/{sigma_u_lim})-1)))*10000 ;|D&eacute;termination des pourcentages minimaux d'acier|Section d'acier minimale verticale||cm<sup>2</sup>/m|
+roh|Mur|{roh} = max ((2/3*{rov}), (0.001*{a})) ;|D&eacute;termination des pourcentages minimaux d'acier|Section d'acier minimale horizontale||cm<sup>2</sup>/m|
+Asc|Mur|{Asc} = max ({rov}, {Ascp}) ;|D&eacute;termination de la section d'acier minimale|Section d'acier minimale ||cm<sup>2</sup>/m|
+Ft28|PoutreJust|{Ft28} = 0.6+(0.06*{Fc28}) ;|Calcul des contraintes admissibles|Contrainte limite de traction du b&eacute;ton ||MPa|
+tau_u|PoutreJust|{tau_u} = {Vu}/({b}*{d}) ;|Calcul des contraintes admissibles|Contrainte tangente de travail||MPa|
+tau_u_adm|PoutreJust|{tau_u_adm} = ({CondFis} == 1) ? min((0.2*{Fc28})/1.5, 5) : min((0.15*{Fc28})/1.5, 4);|Calcul des contraintes admissibles|Contrainte tangente de travail admissible||MPa|
+VerifAdm|PoutreJust|{VerifAdm} = ({tau_u}<{tau_u_adm}) ? "Verifi&eacute;" : "Non conforme" ;|Calcul des contraintes admissibles|V&eacute;rification|||
+phi_l|PoutreJust|{phi_l} = 16 ;|D&eacute;termination des armatures transversales|Diamètre des armatures filantes||mm|
+phi_t_maxi|PoutreJust|{phi_t_maxi} = min({phi_l}, {h}/35, {b}/10)*1000 ;|D&eacute;termination des armatures transversales|Diamètre maxi des aciers transversaux||mm|
+phi_t|PoutreJust|{phi_t} = 6 ;|D&eacute;termination des armatures transversales|Choix des armatures transversales||mm|
+At|PoutreJust|{At} = 1.13 ;|D&eacute;termination des armatures transversales|Section des armatures transversales||cm<sup>2</sup>|
+St_maxi|PoutreJust|{St_maxi} = min((0.9*{d}), 40, ({At}*{Fe}/(0.4*{b}))/ 100)*100 ;|D&eacute;termination des armatures transversales|Espacement maxi des aciers transversaux||cm|
+Stp|PoutreJust|{Stp} = (0.9*{At}*{Fe})/({b}*1.15*({tau_u} - (0.3*{Ft28}*{K}))) / 100 ;|D&eacute;termination des armatures transversales|Espacement des aciers transversaux||cm|
+VerifSt|PoutreJust|{VerifSt} = ({Stp}<{St_maxi} and {Stp}>7) ? "Verifi&eacute;" : "Non conforme" ;|D&eacute;termination des armatures transversales|V&eacute;rification|||
+St|PoutreJust|if ({PresAcComp} == "oui"){ {St_maxi}= 15; {St} = 7;}|D&eacute;termination des armatures transversales|Espacement choisi||cm|
+un_cours|PoutreJust|{un_cours}={St}/2;|R&eacute;partition des cours d'armatures|Espacement suivant Caquot||cm|
+n|PoutreJust|{n}=2;|R&eacute;partition des cours d'armatures|Nombre en cours|||
+Vt|PoutreJust|$Liste = array (7,8,9,10,11,13,16,20,25,35,40);foreach($Liste as $CurValeur){ if ({St}>=$CurValeur){{Vt}=$CurValeur; break;} } |R&eacute;partition des cours d'armatures|Suite de Caquot|||
+Choix|PoutreJust|{Choix}={Appui};|Justification aux appuis|Appui|||
+a|PoutreJust|{a}=(3.75*{Vu})/({b}*{Fc28});|Justification aux appuis|Profondeur minimale d'appui||cm|
+Mu|PoutreJust|if ({Appui}==2) {Mu}=0.103;|Justification aux appuis|Moment ultime|0|MN.m|
+Ru|PoutreJust|if ({Appui}==2) {Ru}={Vu};|Justification aux appuis|R&eacute;action d'appui|0|MN|
+sigma_mb|PoutreJust|{sigma_mb}={Ru}/({a}*{b});|Justification aux appuis|Contrainte moyenne de compression||MPa|
+VerifMb|PoutreJust|{VerifMb}= ({sigma_mb}<(0.867*{Fc28})) ? "Verifi&eacute;" : "Non conforme" ;|Justification aux appuis|V&eacute;rification||MPa|
+As|PoutreJust|{As}= ({Appui}==1) ? ({Vu}*1.15)/{Fe}*10000 : (1.15/{Fe})*({Vu}-({Mu}/(0.9*{d})))*10000 ;|Justification aux appuis|Section minimale d'armature sur appui||cm<sup>2</sup>|
+Ast|PoutreJust|{Ast}= 24.12 ;|Justification aux appuis|Carat&eacute;ristique de la poutre||cm<sup>2</sup>|
+VerifSect|PoutreJust|{VerifSect}= ({As}<{Ast}) ? "Verifi&eacute;" : "Non conforme" ;|Justification aux appuis|Controle de la section minimale sur appui|||
+VerifFrag|PoutreJust|{VerifFrag}= (({Ast}/({b}*{d}))> 0.23*({Ft28}/{Fe})) ? "Verifi&eacute;" : "Non conforme" ;|Justification aux appuis|Condition de la non fragilit&eacute;|||
+Nu|Semelle|{Nu} = 1.35*{G}+1.50*{Q} ;||Elancement (Effort ultime)||MN|
+S1|Semelle|{S1}={Nu}/{q_sol};|R&eacute;sutats|Aire approch&eacute;e de la surface||m<sup>2</sup>|
+A1|Semelle|if ({TypeCalc}==1) { {A1}= pow({Nu}*({a}/{b}), 0.5) ; {B1}= pow({Nu}*({b}/{a}), 0.5) ; {DebordA}= ({A1}-{a})/ 8; } else { {DebordA} = ((pow(4*{S1}+pow({a}, 2)-(2*{a}*{b})+pow({b}, 2), 0.5)-{a}-{b})/ 4) ; {DebordB} = {S1}*({a}/{b}) ; {A1} = {a}+2*{DebordA} ; {DebordB} = {DebordA} ; {B1} = {b}+2*{DebordB} ; } |R&eacute;sutats|Calcul des dimensions approch&eacute;s : A ||m|
+B1|Semelle||R&eacute;sutats|Calcul des dimensions approch&eacute;s : B||m|
+DebordA|Semelle||R&eacute;sutats|Calcul des dimensions approch&eacute;s : D&eacute;bord A||m|
+DebordB|Semelle||R&eacute;sutats|Calcul des dimensions approch&eacute;s : D&eacute;bord B||m|
+A|Semelle|{A}=round({A1}, 2) ;|R&eacute;sutats|Choix des dimensions : A||m|
+B|Semelle|{B}=round({B1}, 2) ;|R&eacute;sutats|Choix des dimensions : B||m|
+Ht_mini|Semelle|{Ht_mini}= (({DebordA} > 0.15)) ? (({B}-{b})/4)+0.05 : (2*{DebordA}+0.05) ;|R&eacute;sutats|Hauteur minimale de la semelle||m|
+Ht|Semelle|{Ht}= round ({Ht_mini}, 1) ;|R&eacute;sutats|Hauteur minimale de la semelle||m|
+d|Semelle|{d}= {Ht}- 0.05 ;|R&eacute;sutats|Hauteur minimale de la semelle||m|
+S|Semelle|{S}= {A}*{B} ;|Calcul de la contrainte admissible du sol|Aire de la surface portante||m|
+Pp|Semelle|{Pp}= {A}*{B}*{Ht}*0.025 ;|Calcul de la contrainte admissible du sol|Poids propre de la semelle||MN|
+N|Semelle|{N}= {Nu}+{Pp} ;|Calcul de la contrainte admissible du sol|Charge totale sur le sol||MN|
+qp|Semelle|{qp}= {N} / {S} ;|Calcul de la contrainte admissible du sol|Contrainte de travail sur le sol||MPa|
+Verifq|Semelle|{Verifq}= ({qp}<{q_sol}) ? "Verifi&eacute;" : "Non conforme" ;|Calcul de la contrainte admissible du sol|Charge totale sur le sol||MN|
+Ft28|Semelle|{Ft28}= 0.6+(0.06*{Fc28}) ;|D&eacute;termination des aciers tendus|Contrainte de traction du b&eacute;ton||MPa|
+fi|Semelle|{fi}=1.6 ;|D&eacute;termination des aciers tendus|Fi|||
+ro_st|Semelle|{ro_st}= ({CondFis}==1) ? min (2/3*{Fe}, max(1/2*{Fe}, 110*pow({fi}*{Ft28}, 0.5))) : 0.8 * min (2/3*{Fe}, max(1/2*{Fe}, 110*pow({fi}*{Ft28}, 0.5)))  ;|D&eacute;termination des aciers tendus|Contrainte de traction de l'acier||MPa|
+Ax_b|Semelle|{Ax_b} = ({Nser}/8)*(({B}-{b})/({d}*{ro_st}))*10000 ;|D&eacute;termination des aciers tendus|Nappe inf&eacute;rieure||cm<sup>2</sup>|
+Ay_a|Semelle|{Ay_a} = ({Nser}/8)*(({A}-{a})/({d}*{ro_st}))*10000 ;|D&eacute;termination des aciers tendus|Nappe sup&eacute;rieure||cm<sup>2</sup>|
+d|PoutreRectELU|{d} = {h}-{e} ;|Calcul &agrave; l'ELU|Hauteur utile des aciers||m|
+Fbu|PoutreRectELU|{Fbu} = round (0.85*{Fc28}/1.5, 2) ; |Calcul &agrave; l'ELU|Contrainte de compression du b&eacute;ton &agrave; l' ELU||MPa|
+Ft28|PoutreRectELU|{Ft28} = 0.6+(0.06*{Fc28}) ; |Calcul &agrave; l'ELU|R&eacute;sistance du b&eacute;ton en traction||MPa|
+Fed|PoutreRectELU|{Fed} = round ({Fe}/1.15, 0) ; |Calcul &agrave; l'ELU|Fed||MPa|
+Mu|PoutreRectELU|{Mu} = 1.35*{MG}+1.50*{MQ} ;|Calcul &agrave; l'ELU|Moment ultime||KN.m|
+Mser|PoutreRectELU|{Mser} = {MG}+{MQ} ;|Calcul &agrave; l'ELU|Moment de service||MN.m|
+Mbu|PoutreRectELU|{Mbu} = round ({Mu}/1000/ ({b}*pow({d}, 2)*{Fbu}), 3) ; |Calcul &agrave; l'ELU|Moment r&eacute;duit||MN.m|
+VerifMbu|PoutreRectELU|{VerifMbu} = ({Mbu}<0.186) ? "Pivot A" : "Pivot B" ; |Calcul &agrave; l'ELU|D&eacute;termination du pivot|||
+alpha|PoutreRectELU|if ((1-2.06*{Mbu}) > 0) {alpha} = round (1.20*(1-pow((1-2.06*{Mbu}), 0.5)), 3) ; else {alpha} = (1-2*{Mbu})." Incorrect" ; |Calcul avec le diagramme parabole rectangle exact|Hauteur relative axe neutre|||
+Zb|PoutreRectELU|{Zb} = round ({d}*(1-0.416*{alpha}), 3) ;|Calcul avec le diagramme parabole rectangle exact|Bras de levier acier|||
+Au|PoutreRectELU|{Au} = round ({Mu}/ 1000 / ({Zb}*{Fed}) * 10000, 3) ;|Calcul avec le diagramme parabole rectangle exact|Acier th&eacute;orique||cm<sup>2</sup>|
+alphaRect|PoutreRectELU|if ((1-2*{Mbu}) > 0) {alphaRect} = round (1.25*(1-pow((1-2*{Mbu}), 0.5)), 3) ; else {alphaRect} = (1-2*{Mbu})." Incorrect" ; |Calcul avec le diagramme rectangulaire simplifi&eacute;|Hauteur relative axe neutre|||
+ZbRect|PoutreRectELU|{ZbRect} = round ({d}*(1-0.4*{alphaRect}), 3) ; |Calcul avec le diagramme rectangulaire simplifi&eacute;|Bras de levier acier|||
+AuRect|PoutreRectELU|{AuRect} = round ({Mu} / 1000 /({ZbRect}* {Fed}) * 10000, 2) ; |Calcul avec le diagramme rectangulaire simplifi&eacute;|Acier th&eacute;orique||cm<sup>2</sup>|
+delta|PoutreRectELU|if ({Fe} == 400) {delta} = round ({Mu}/ {Mser}, 3) ; elseif ({Fe}== 500 && {Fc28} == 25) {delta} = round ({Mu}/ {Mser}, 3) ; else {delta} = 0 ; |D&eacute;termination de Mlu|delta|||
+Mlu|PoutreRectELU|if ({Fe} == 400) {Mlu} = round ((0.317*{delta} - 0.1721) / 0.9, 4) ; else {Mlu} = round ((0.317*{delta} - 0.1721), 4) ; |D&eacute;termination de Mlu|Mlu|||
+VerifMlu|PoutreRectELU|{VerifMlu} = ({Mbu}<{Mlu}) ? "Pas d'acier comprim&eacute;" : "Existence d'acier comprim&eacute;s" ; |D&eacute;termination de Mlu|V&eacute;rification|||
+FormuleEq|PoutreRectELU|{FormuleEq} = round(100*{b}/2, 0)." Y<sup>2</sup> + ".round((15*{AuRect}), 0)." Y - ".round ((round(15*{AuRect}, 0)*{d}*100), 0) ; |Calcul de la contrainte du b&eacute;ton|Formule de l'&eacute;quation|||
+DeltaEq|PoutreRectELU|{DeltaEq} = round (pow(round((15*{AuRect}), 0), 2) - ( 4*round(100*{b}/2, 0)*round(-(round (15*{AuRect}, 0))*{d}*100, 0) ), 0) ; |Calcul de la contrainte du b&eacute;ton|delta de l'&eacute;quation|||
+Y|PoutreRectELU|if ({DeltaEq} > 0) {Y} = ( ((-(15*{AuRect})-sqrt({DeltaEq}))/(2*(100*{b}/2))) > 0 ) ? round (((-(15*{AuRect})-sqrt({DeltaEq}))/(2*(100*{b}/2))) / 100, 3) : round (((-(15*{AuRect})+sqrt({DeltaEq}))/(2*(100*{b}/2))) / 100, 3) ; |Calcul de la contrainte du b&eacute;ton|Solution Y de l'&eacute;quation||m|
+I|PoutreRectELU|{I} = round (({b}*100*pow({Y}*100, 3) / 3 + (15*{AuRect}*(pow(({d}-{Y})*100, 2)))), 0) ; |Calcul de la contrainte du b&eacute;ton|Inertie de la section homogène||cm<sup>4</sup>|
+ro_bc|PoutreRectELU|{ro_bc} = round ({Mser}/1000*{Y}/({I}*pow(10, -8)), 2) ; |Calcul de la contrainte du b&eacute;ton|ro_bc||MPa|
+ro_s|PoutreRectELU|{ro_s} = round (15*{Mser}/1000*({d}-{Y})/({I}*pow(10, -8)), 0) ; |Calcul de la contrainte du b&eacute;ton|ro_bc||MPa|
+Amin|PoutreRectELU|{Amin} = 0.23*({Ft28}/{Fe})*{b}*{d}*10000 ; |Calcul de la contrainte du b&eacute;ton|Ferraillage minimal||cm<sup>2</sup>|
+d|SectionRectFlexSimple|{d} = {h}-{e} ;|1.0 ETAT LIMITE DE RESISTANCE|Hauteur utile des aciers||m|
+Mu|SectionRectFlexSimple|{Mu} = 1.35*{MG}+1.50*{MQ} ;|1.0 ETAT LIMITE DE RESISTANCE|Moment ultime||KN.m|
+Fbu|SectionRectFlexSimple|{Fbu} = round (0.85*{Fc28}/1.5, 2) ; |1.0 ETAT LIMITE DE RESISTANCE|Contrainte de compression du b&eacute;ton &agrave; l' ELU||MPa|
+Mbu|SectionRectFlexSimple|{Mbu} = round ({Mu}/1000/ ({b}*pow({d}, 2)*{Fbu}), 3) ; |1.0 ETAT LIMITE DE RESISTANCE|Moment r&eacute;duit||MN.m|
+Ft28|SectionRectFlexSimple|{Ft28} = 0.6+(0.06*{Fc28}) ; |1.0 ETAT LIMITE DE RESISTANCE|R&eacute;sistance du b&eacute;ton en traction||MPa|
+Mser|SectionRectFlexSimple|{Mser} = {MG}+{MQ} ;|1.0 ETAT LIMITE DE RESISTANCE|Moment de service||MN.m|
+delta|SectionRectFlexSimple|{delta} = round ({Mu}/ {Mser}, 3);|1.0 ETAT LIMITE DE RESISTANCE|delta|||
+VerifMbu|SectionRectFlexSimple|if ({Mbu}<0.186) {VerifMbu} = "Pivot A" ; elseif ({Mbu} < 0.493) {VerifMbu} = "Pivot B" ; else {VerifMbu} = "Pivot C" ; |1.0 ETAT LIMITE DE RESISTANCE|D&eacute;termination du pivot|||
+Mlu|SectionRectFlexSimple|if ({Fe} == 400) {Mlu} = round ((0.317*{delta} - 0.1721) / 0.9, 4); elseif ({Fe} == 500 && {Fc28} == 30) {Mlu} = 0.303 ; else {Mlu} = round ((0.317*{delta} - 0.1721), 4) ; |1.0 ETAT LIMITE DE RESISTANCE|Mlu|||
+ro_p|SectionRectFlexSimple|{ro_p} = round({d_p} / {d}, 3); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|ro_bc||MPa|
+ro_sce|SectionRectFlexSimple|{ro_sce} = round (9*{delta}*{Fc28} - {ro_p}*(13*{Fc28}+415), 0); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|ro_bc||MPa|
+Mlu_2|SectionRectFlexSimple|{Mlu_2} = round({Mlu}*{b}*pow({d}, 2)*{Fbu}, 3); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|Mlu utilis&eacute; dans le calcul de la section des aciers||MPa|
+A_p|SectionRectFlexSimple|{A_p} = round (10000 * ({Mu}/1000 - {Mlu_2})/({ro_sce}*({d}-{d_p})), 2); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|Section d'aciers comprim&eacute;s||cm<sup>3</sup>|
+alpha_lu|SectionRectFlexSimple|{alpha_lu} = round(1.25*(1-sqrt(1-2*{Mlu})), 3); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|Alpha Lu||cm|
+Z_bl|SectionRectFlexSimple|{Z_bl} = round({d}*(1 - 0.4*{alpha_lu}), 1)*100; |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|Z bl||cm|
+Fed|SectionRectFlexSimple|{Fed} = round ({Fe}/1.15, 0) ; |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|Fed||Mpa|
+A|SectionRectFlexSimple|{A} = round((({Mlu_2}*10000)/({Z_bl}/100*{Fed}))+({A_p}*{ro_sce}/{Fed}), 2); |1.1 M&eacute;thode &agrave; partir de la contrainte &eacute;quivalente des aciers comprim&eacute;s|A||cm|
+VerifMlu|SectionRectFlexSimple|{VerifMlu} = ({Mbu}<{Mlu}) ? "Pas d'acier comprim&eacute;" : "Existence d'acier comprim&eacute;s" ; |1.2 M&eacute;thode de r&eacute;dimensionnement &agrave; partir des &eacute;tats limites de service|V&eacute;rification de pr&eacute;sence des aciers comprim&eacute;s|||
+Fij|SectionRectFlexSimple|{Fij} = 2.4; |1.3 V&eacute;rification de la condition de non fragilit&eacute;|A|||
+pi|SectionRectFlexSimple|{pi} = round(0.23 * {Fij}/{Fe}, 7) * 1000; |1.3 V&eacute;rification de la condition de non fragilit&eacute;|Taux||*10<sup>- 3</sup>cm|
+Amin|SectionRectFlexSimple|{Amin} = round (0.23*({Ft28}/{Fe})*{b}*{d}*10000, 2) ; |1.3 V&eacute;rification de la condition de non fragilit&eacute;|Pourcentage minimum d'acier||cm<sup>2</sup>|
+FormuleEq|SectionRectFlexSimple|{FormuleEq} = round(100*{b}/2, 1)." Y<sup>2</sup> + ".round((15*({A}+{A_p})), 0)." Y - ".(15*({A_p}*{d_p}*100+{A}*{d}*100)) ; |2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Formule de l'&eacute;quation|||
+delta_eq|SectionRectFlexSimple|{delta_eq} = pow(round((15*({A}+{A_p})), 0), 2) - 4*round(100*{b}/2, 1)*(-(15*({A_p}*{d_p}*100+{A}*{d}*100))) ; |2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Delta de l'&eacute;quation|||
+Y1|SectionRectFlexSimple|if ({delta_eq} > 0){ if (round ((-round((15*({A}+{A_p})), 0) - sqrt({delta_eq}))/(2*round(100*{b}/2, 1)), 3) > 0) {Y1} = round ((-round((15*({A}+{A_p})), 0) - sqrt({delta_eq}))/(2*round(100*{b}/2, 1)), 3) ; else {Y1} = round ((- round((15*({A}+{A_p})), 0) + sqrt({delta_eq}))/(2*round(100*{b}/2, 1)), 3) ; } else { {Y1} = 0 ;}|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Y1 de l'&eacute;quation||cm|
+I|SectionRectFlexSimple|{I} = round ({b}*100*pow({Y1}, 3)/3+ 15*{A}*pow({d}*100-{Y1}, 2)+15*{A_p}*pow({Y1}-{d_p}*100, 2), 0) ;|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Inertie par rapport &agrave; l'axe neutre||cm<sup>4</sup>|
+K|SectionRectFlexSimple|{K} = round({Mser}*0.001 / ({I}*pow(10, -8)), 2);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Contraintes||MPa|
+ro_bc|SectionRectFlexSimple|{ro_bc} = round({K}*{Y1}/100, 2);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&sigma; <sub>bc</sub>||MPa|
+ro_sc|SectionRectFlexSimple|{ro_sc} = round(15*{K}*({Y1}-{d_p}*100)/100, 2);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&sigma; <sub>sc</sub>||MPa|
+ro_s|SectionRectFlexSimple|{ro_s} = round(15*{K}*({d}*100-{Y1})/100, 2);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&sigma; <sub>s</sub>||MPa|
+module_ro_bc|SectionRectFlexSimple|{module_ro_bc} = 0.6*{Fc28};|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Le module de <font style="border-top-style:solid; border-top-width:2px">&sigma; <sub>s</sub></font>||MPa|
+mu_ser|SectionRectFlexSimple|{mu_ser} = round({Mser}/({b}*pow({d}, 2)*{module_ro_bc})/1000, 3);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&mu; <sub>ser</sub>|||
+mu_lser|SectionRectFlexSimple|{mu_lser} = round(0.944*{Mlu}/{delta}, 2);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&mu; <sub>lser</sub>|||
+Verif_mu_ser|SectionRectFlexSimple|{Verif_mu_ser}= ({mu_ser}>{mu_lser}) ? "Verifi&eacute;" : "Non conforme" ;|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Charge totale sur le sol|||
+m_ser|SectionRectFlexSimple|{m_ser} = round({mu_lser}*{b}*pow({d}, 2)*{module_ro_bc}, 3);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Moment limite de service||m.MN|
+module_a_1l|SectionRectFlexSimple|{module_a_1l} = round(1.5*(1-sqrt(1-8/3*{mu_lser})), 3);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|Le module de &alpha; <sub>1l</sub>|||
+ro_scser|SectionRectFlexSimple|{ro_scser} = round(15*{module_ro_bc}*(1-{ro_p}/{module_a_1l}), 0);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&mu; <sub>scser</sub>||MPa|
+A_p_ser|SectionRectFlexSimple|{A_p_ser} = round(10000*({Mser}/1000-{m_ser})/({ro_scser}*({d}-{d_p})), 3);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&mu; <sub>scser</sub>||MPa|
+z_bl|SectionRectFlexSimple|{z_bl} = round({d}*(1-{module_a_1l}/3), 3)*100;|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|z <sub>bl</sub>||cm|
+sigma_s|SectionRectFlexSimple|{sigma_s} = round(15*{module_ro_bc}*(1/{module_a_1l}-1), 0);|2.0 ETAT LIMITE DE SERVICE VIS-A-VIS DE LA DURABILITE DE LA STRUCTURE|&sigma; <sub>s</sub>||MPa|
+G|Dalle2Appuis|{G} = {ep}*25+{Gp} ; |Calcul des moments agissants|Charges permanantes G||KN/m<sup>2</sup>|
+Pu|Dalle2Appuis|{Pu} = 1.35*{G}+1.5*{Q} ; |Calcul des moments agissants|Effort ultime repris par le plancher||KN/m|
+Mo_trav|Dalle2Appuis|{Mo_trav} = {Pu}*pow({Lx}, 2) / 8 ; {M0}={Mo_trav}; |Calcul des moments agissants|Moment isostatique de la trav&eacute;e||KN.m|
+Mw|Dalle2Appuis|{Mw} = ({M0Mw}=='' or {M0Mw}== 0) ? {M0}*{CoefMw} : {M0Mw} ; |Calcul des moments agissants|Moment sur appui gauche ( w )||KN.m|
+Me|Dalle2Appuis|{Me} = ({M0Me}=='' or {M0Me}== 0) ? {M0}*{CoefMe} : {M0Me} ; |Calcul des moments agissants|Moment sur appui droite ( e )||KN.m|
+alpha|Dalle2Appuis|{alpha}={Q}/({G}+{Q}) ; |Calcul des moments agissants|Calcul du coefficient alpha|||
+lambda|Dalle2Appuis|{lambda}=max ( 1.05, 1+(0.3*{alpha})) ; |Calcul des moments agissants|Calcul du coefficient l|||
+Mt|Dalle2Appuis|{Mt}= ((2*{lambda}*{M0}) - {Me} - {Mw}) / 2 ; |Calcul des moments agissants|Moment dans la trav&eacute;e||KN.m|
+VerifTrav|Dalle2Appuis|if ({TypeTrav}=="oui") {VerifTrav} = (({Mt}>((1.2 + 0.3*{alpha})/2)*{M0})) ? "V&eacute;rifi&eacute;" : "Non v&eacute;rifi&eacute;" ; else {VerifTrav} = (({Mt}>((1 + 0.3*{alpha})/2)*{M0})) ? "V&eacute;rifi&eacute;" : "Non v&eacute;rifi&eacute;" ; |Calcul des moments agissants|V&eacute;rification|||
+Ax|Dalle2Appuis|{Ax}=(391 * ({Mt} / 1000) ) / ( ( 10* {FeE} ) * ( ( pow ( ( 17* ( ( 17 * (pow ({ep} - ({C} / 100), 2) * {Fc28} ) - 60 * ({Mt}/ 1000) ) ) ) / {Fc28}, 0.5 ) + ( 17 * ( {ep} - ( {C} / 100 ) ) ) ) ) ) * 10000 ; |Calcul des sections d'armatures|Ferraillage de la trav&eacute;e sens (Lx)||cm<sup>2</sup> / m<sup>2</sup>|
+Ax_w_|Dalle2Appuis|{Ax_w_}=(391 * ({Mw} / 1000) ) / ( ( 10* {FeE} ) * ( ( pow ( ( 17* ( ( 17 * (pow ({ep} - ({C} / 100), 2) * {Fc28} ) - 60 * ({Mw}/ 1000) ) ) ) / {Fc28}, 0.5 ) + ( 17 * ( {ep} - ( {C} / 100 ) ) ) ) ) ) * 10000 ; |Calcul des sections d'armatures|Ferraillage sur appui ( w )||cm<sup>2</sup> / m<sup>2</sup>|
+Ax_e_|Dalle2Appuis|{Ax_e_}=(391 * ({Me} / 1000) ) / ( ( 10* {FeE} ) * ( ( pow ( ( 17* ( ( 17 * (pow ({ep} - ({C} / 100), 2) * {Fc28} ) - 60 * ({Me}/ 1000) ) ) ) / {Fc28}, 0.5 ) + ( 17 * ( {ep} - ( {C} / 100 ) ) ) ) ) ) * 10000 ; |Calcul des sections d'armatures|Ferraillage sur appui ( e )||cm<sup>2</sup> / m<sup>2</sup>|
+ro_0_y_|Dalle2Appuis| {ro_0_y_} = ({FeE} == 400 ) ? 8* {ep} : 6 * {ep} ; |Calcul des sections d'armatures|Ferraillage mini dans le sens ( Ly )||cm<sup>2</sup> / m<sup>2</sup>|
+ro_0_x_|Dalle2Appuis| {ro_0_x_} = {ro_0_y_} * ( ( 3 - {alpha} ) / 2 ) ; |Calcul des sections d'armatures|Ferraillage mini dans le sens ( Lx )||cm<sup>2</sup> / m<sup>2</sup>|
+Vu_max|Dalle2Appuis| {Vu_max} = 1.10 * ( ( {Pu} * {Lx} ) / 2) ; |V&eacute;rification de la contrainte de cisaillement|Effort tranchant maximal ( sens L(x) )||KN|
+theta_u|Dalle2Appuis| {theta_u} = ( {Vu_max} / (1 * ( {ep} - {C}/ 100 )) ) / 1000 ; |V&eacute;rification de la contrainte de cisaillement|Contrainte tangente de travail||MPa|
+theta_u_adm|Dalle2Appuis| {theta_u_adm} = ( 0.07 * {Fc28} ) / 1.5 ; |V&eacute;rification de la contrainte de cisaillement|Contrainte tangente admissible||MPa|
+VerifTheta|Dalle2Appuis| {VerifTheta} = ( {theta_u} < {theta_u_adm} ) ? "V&eacute;rifi&eacute;" : "Non v&eacute;rifi&eacute;" ; |V&eacute;rification de la contrainte de cisaillement|Contrainte tangente admissible|||
+Nu|Tirant|{Nu} = 1.35*{G}+1.50*{Q} ;||Elancement (Effort ultime)||MN|
+Ft28|Tirant|{Ft28}= 0.6+(0.06*{Fc28}) ;|Contraintes de calcul|Contrainte de traction du b&eacute;ton||MPa|
+Fsu|Tirant|{Fsu}={Fe}/1.15 ;|Contraintes de calcul|Calcul de traction de l'acier ( ELU )||MPa|
+ro_st|Tirant|{ro_st}= ({CondFis}==1) ? min (2/3*{Fe}, max(1/2*{Fe}, 110*pow({fi}*{Ft28}, 0.5))) : 0.8 * min (2/3*{Fe}, max(1/2*{Fe}, 110*pow({fi}*{Ft28}, 0.5)))  ;|Contraintes de calcul|Contrainte de traction de l'acier ( ELS )||MPa|
+Au|Tirant|{Au} = {Nu} / {Fsu} * 10000 ;|Section th&eacute;orique des aciers tendus|Section th&eacute;orique d'acier &agrave; l'ELU||cm<sup>2</sup>|
+Aser|Tirant|{Aser} = {Nser} / {ro_st} * 10000 ;|Section th&eacute;orique des aciers tendus|Section th&eacute;orique d'acier &agrave; l'ELU||cm<sup>2</sup>|
+fi_t|Tirant|{fi_t} = ({CondFis}==1) ? max ( 6, {fi_l} / 4 ) : max ( 8, {fi_l} / 4 ) ;|D&eacute;termination des armatures transversales|Diamètre des aciers transversaux||mm|
+St|Tirant|{St} = min ( {a}*100 + 10, 40 ) ;|D&eacute;termination des armatures transversales|Espacement des aciers transversaux||cm|
+CondFrag|Tirant|{CondFrag} = ( {Ast}*{Fe} > ( {a} * {b} * {Ft28} ) ) ? "V&eacute;rifi&eacute;" : "Non v&eacute;rifi&eacute;" ;|V&eacute;rification r&eacute;gl&eacute;mentaires|Condition de non fragilit&eacute;|||
+CondDiamEcart|Tirant|if ({CondFis} == 1) {CondDiamEcart} = ({fi_l}>6 and {eh}<(4*{fi_l})) ? "V&eacute;rifi&eacute;"  : "Non v&eacute;rifi&eacute;" ; else {CondDiamEcart} = ({fi_l}>8 and {eh}<(3*{fi_l})) ? "V&eacute;rifi&eacute;"  : "Non v&eacute;rifi&eacute;" ;|V&eacute;rification r&eacute;gl&eacute;mentaires|Diamètre et &eacute;cartements|||
+ls|Tirant|{ls} = ({Fe} == 400) ? {fi_l}*4 : {fi_l}*5 ;|V&eacute;rification r&eacute;gl&eacute;mentaires|Longueur de scellement droit||cm|
+ht|Escalier|{ht} = {lo} / {nc} * 100 ;||Hauteur de marche||cm|
+lp|Escalier|{lp} = {n} * {ht} / 100 ;||Hauteur &agrave; franchir correspondante||m|
+epr|Escalier|{epr} = {ep}+ ( {ht} / 2 ) ;||Epaisseur moyenne de la vol&eacute;e||cm|
+alphap|Escalier|{alphap} = (atan ( {lp} / {l} ) * (180 / pi()) ) ;||Angle moyen d'inclinaison||degres|
+G|Escalier|{G} = {pvb} / cos({alphap}*pi()/180) * {epr} * {n1_e} / 100 ;||Charges permanentes G||KN/ml|
+Q|Escalier|{Q} = 5 * {n1_e} ;||Charges d'exploitations Q||KN/ml|
+Pser|Escalier|{Pser} = {Q} + {G} ;||Effort de service repris par l'escalier||KN/ml|
+Pu|Escalier|{Pu} = 1.35*{G} + 1.5*{Q} ;||Effort ultime repris par l'escalier||KN/ml|
+Mser|Escalier|{Mser} = {Pser} * pow({l}, 2) / 8 ;||Moment de service||KN.m|
+Mu|Escalier|{Mu} = {Pu} * pow({l}, 2) / 8 ;||Moment ultime||KN.m|
+gamma|Escalier|{gamma} = {Mu} / {Mser} ;||Coefficient de sollicitation|||
+d|Escalier|{d} = {ep} - 3 ;||Hauteur utile de la vol&eacute;e||cm|
+Fbu|Escalier|{Fbu} = (0.85 * {Fc28}) / 1.5 ;||Contrainte de calcul du b&eacute;ton||MPa|
+Fsu|Escalier|{Fsu} = {Fe} / 1.15 ;||Contrainte de calcul de l'acier||MPa|
+mu_u|Escalier|{mu_u} = {Mu} / ({n1_e}*pow ({d}, 2)*{Fbu}) * 10 ;||Moment r&eacute;duit ultime|||
+SysRet|Escalier|{SysRet} = ({mu_u}<{mu_l}) ? "Aciers simples" : "Pas d'aciers simples en tout cas" ;||Système d'armatures retenus|||
+alpha|Escalier|{alpha} = 1.25 * (1 - pow (1-2*{mu_u}, 0.5)) ;||Coefficient de la fibre neutre|||
+Zb|Escalier|{Zb} = {d} * (1-0.4*{alpha}) ;||Bras de levier du couple interne||cm|
+Ax|Escalier|{Ax} ={Mu} / ({Zb}* {Fsu} ) * 1000;||Section th&eacute;orique des acier filants||cm<sup>2</sup>|
+Ay|Escalier|{Ay} ={Ax} / 4 ;||Section th&eacute;orique des aciers de r&eacute;partitions||cm<sup>2</sup> / ml|
+Mu|PoutreTELU|{Mu} = 1.35*{G} + 1.5*{Q} ;|Contraintes de calcul|Moment ultime||KN.m|
+Fbu|PoutreTELU|{Fbu} = 0.85*{Fc28}/1.5 ;|Contraintes de calcul|Contrainte de compression du b&eacute;ton||MPa|
+Fsu|PoutreTELU|{Fsu} = {Fe}/1.15 ;|Contraintes de calcul|Contrainte de traction des aciers||MPa|
+mu_u|PoutreTELU|{mu_u} = {Mu} / ( {b}*pow( {d}, 2 )*{Fbu}) ;|Contraintes de calcul|Moment utime r&eacute;duit||MPa|
+VerifMu|PoutreTELU|{VerifMu} = ({mu_u}<{mu_l}) ? "V&eacute;rifi&eacute;" : "Non v&eacute;rifi&eacute;" ;|Contraintes de calcul|V&eacute;rification|||
+alpha|PoutreTELU|{alpha} = 1.25 * ( 1 - (pow ((1 - 2*{mu_u}) , 0.5) ) ) ;|Contraintes de calcul|Coefficient de la fibre neutre|||
+y|PoutreTELU|{y} = {alpha}*{d} ;|Contraintes de calcul|Ordonn&eacute;e de la fibre neutre||m|
+ModeCalc|PoutreTELU|{ModeCalc} = ({y}<(1.25*{ho})) ? "Calcul rectangulaire" : "Calcul en T" ;|Contraintes de calcul|D&eacute;termination du mode de calcul|||

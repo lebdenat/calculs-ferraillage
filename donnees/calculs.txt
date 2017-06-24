@@ -1,0 +1,130 @@
+nom|calcul|titre|description|form|theme|valeur|unite|autres
+b|Poteau|Grand cote du Poteau||<input type="text" value="" name="b" size="4" />|||m|
+a|Poteau|Petit cote du Poteau||<input type="text" value="" name="a" size="4" />|||m|
+Lo|Poteau|Hauteur d'&eacute;tage||<input type="text" value="" name="Lo" size="4" />|||m|
+TypePot|Poteau|Poteau de rive||D&eacute;faut : <input type="radio" value="def"  name="TypePot" checked /> - Oui : <input type="radio" value="oui" name="TypePot" /> - Non : <input type="radio" value="non" name="TypePot" />||||
+fc28|Poteau|B&eacute;ton||<input type="text" value="" name="fc28" size="4" />|||MPa|
+Acos|Poteau|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Acos" size="4" />|||Mpa|
+G|Poteau|Charge permanente||<input type="text" value="" name="G" size="4" />||||
+Q|Poteau|Charge d'expoitation||<input type="text" value="" name="Q" size="4" />||||
+K|Poteau|Coefficient K||<select name="K"><option value="1.20">Nu =&gt; avant 28 jours</option><option value="1.10">Nu =&gt avant 90 jours</option><option value="1" selected>(Nu/2) =&gt; après 90 jours</option></select>||||
+D|PoteauCirc|Diamètre du poteau||<input type="text" value="" name="D" size="4" />|||m|
+Fe|PoteauCirc|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||MPa|
+Fcj|PoteauCirc|Contrainte du b&eacute;ton a 28 jours||<input type="text" value="" name="Fcj" size="4" />|||MPa|
+Lo|PoteauCirc|Hauteur d'&eacute;tage||<input type="text" value="" name="Lo" size="4" />|||m|
+TypePot|PoteauCirc|Poteau de rive||D&eacute;faut : <input type="radio" value="def" name="TypePot" checked /> - Oui : <input type="radio" value="oui" name="TypePot" /> - Non : <input type="radio" value="non" name="TypePot" />||||
+G|PoteauCirc|Charge permanente||<input type="text" value="" name="G" size="4" />||||
+Q|PoteauCirc|Charge d'expoitation||<input type="text" value="" name="Q" size="4" />||||
+K|PoteauCirc|Coefficient K||<select name="K"><option value="1.20">Nu =&gt; avant 28 jours</option><option value="1.10">Nu =&gt avant 90 jours</option><option value="1" selected>(Nu/2) =&gt; après 90 jours</option></select>||||
+fi_l|PoteauCirc|Diamètre des armatures comprim&eacute;es||<input type="text" value="10" name="fi_l" size="4" />|Autres||| />|||mm|
+b|PoutreRectELS|Largeur de la poutre||<input type="text" value="" name="b" size="4" />|||m|
+d|PoutreRectELS|Hauteur utile des aciers fondus||<input type="text" value="" name="d" size="4" />|||m|
+dp|PoutreRectELS|Hauteur utile des aciers comprimes (si necessaire)||<input type="text" value="" name="dp" size="4" />|||m|
+Acos|PoutreRectELS|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Acos" size="4" />|||MPa|
+fc28|PoutreRectELS|Contrainte du beton &agrave; 28 jours||<input type="text" value="" name="fc28" size="4" />|||MPa|
+nu|PoutreRectELS|fi(nu)||<input type="text" value="1.6" name="nu" size="3" />|||u|
+h|PoutreRectELS|H : utilise pour les aciers de peau||<input type="text" value="0" name="h" size="3" />|||u|
+Mser|PoutreRectELS|Moment de service||<input type="text" value="" name="Mser" size="4" />|||MN/m|
+TypeFis|PoutreRectELS|Condition de fissuration||FP : <input type="radio" value="FP" name="TypeFis" /> - FTP : <input type="radio" value="FTP" name="TypeFis" checked />||||
+Q|PoutreCont|Q||<input type="text" value="" name="Q" size="4" />|||KN/ml|
+G|PoutreCont|G||<input type="text" value="" name="G" size="4" />|||KN/ml|
+CoefQ|PoutreCont|Coefficient Q||<input type="text" value="" name="CoefQ" size="4" />||||
+CoefG|PoutreCont|Coefficient G||<input type="text" value="" name="CoefG" size="4" />||||
+Mw|PoutreCont|Moment sur appui(si trav&eacute;e interm&eacute;diaire)||<input type="text" value="" name="Mw" size="4" />||||
+Lw|PoutreCont|Longueur de la trav&eacute;e||<input type="text" value="" name="Lw" size="4" />|Caract&eacute;ristiques de la trav&eacute;e 1|||
+TypeTrav1|PoutreCont|Trav&eacute;e de rive||Oui : <input type="radio" value="oui" name="TypeTrav1" size="4" /> - Non : <input type="radio" value="non" name="TypeTrav1" size="4"  checked/>|Caract&eacute;ristiques de la trav&eacute;e 1|||
+Le|PoutreCont|Longueur de la trav&eacute;e||<input type="text" value="" name="Le" size="4" />|Caract&eacute;ristiques de la trav&eacute;e 2|||
+TypeTrav2|PoutreCont|Trav&eacute;e de rive||Oui : <input type="radio" value="oui" name="TypeTrav2" size="4" /> - Non : <input type="radio" value="non" name="TypeTrav2" size="4" checked />|Caract&eacute;ristiques de la trav&eacute;e 2|||
+G|Mur|Coefficient permanent||<input type="text" value="" name="G" size="4" />||||
+Q|Mur|Charge d'exploitation||<input type="text" value="" name="Q" size="4" />||||
+a|Mur|Epaisseur du mur||<input type="text" value="" name="a" size="4" />|||m|
+Ht|Mur|Hauteur du mur||<input type="text" value="" name="Ht" size="4" />|||m|
+FeE|Mur|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="FeE" size="4" />|||Mpa|
+Fc28|Mur|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||Mpa|
+K|Mur|Coefficient K||<select name="K"><option value="1" selected>(Nu/2) =&gt; après 90 jours</option><option value="1.10">Nu =&gt avant 90 jours</option><option value="1.20">Nu =&gt; avant 28 jours</option></select>||||
+MurRive|Mur|Mur de rive||Oui : <input type="radio" value="oui" name="MurRive" checked/> - Non <input type="radio" value="Non" name="MurRive" /> ||||
+b|PoutreJust|Largeur de la poutre||<input type="text" value="" name="b" size="4" />|||m|
+h|PoutreJust|Hauteur totale de la poutre||<input type="text" value="" name="h" size="4" />|||m|
+d|PoutreJust|Hauteur utile de la poutre||<input type="text" value="" name="d" size="4" />|||m|
+l|PoutreJust|Longueur de la poutre||<input type="text" value="" name="l" size="4" />|||m|
+Fe|PoutreJust|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||MPa|
+Fc28|PoutreJust|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||MPa|
+Vu|PoutreJust|Effort tranchant ultime||<input type="text" value="" name="Vu" size="4" />|||MN|
+K|PoutreJust|Coefficient K||<select name="K"><option value="0" selected>Reprise de b&eacute;tonnage(FTP)</option><option value="1">Flexion simple(FPP ou FP)</option></select>||||
+CondFis|PoutreJust|Conditions de fissure||<select name="CondFis"><option value="1" selected>FPP</option><option value="2">FP</option><option value="3">FTP</option></select>||||
+PresAcComp|PoutreJust|Pr&eacute;sence d'aciers comprim&eacute;s||Oui : <input type="radio" name="PresAcComp" value="oui" checked /> - Non : <input type="radio" name="PresAcComp" value="non" />||||
+Appui|PoutreJust|Appui||Rive : <input type="radio" name="Appui" value="1" checked /> - Interm&eacute;diaire : <input type="radio" name="Appui" value="2" />||||
+b|Semelle|Grand côt&eacute; du poteau||<input type="text" value="" name="b" size="4" />|||m|
+a|Semelle|Petit côt&eacute; du poteau||<input type="text" value="" name="a" size="4" />|||m|
+Fe|Semelle|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||Mpa|
+Fc28|Semelle|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||Mpa|
+Nser|Semelle|Effort de service||<input type="text" value="" name="Nser" size="4" />|||MN|
+G|Semelle|G||<input type="text" value="" name="G" size="4" />|||MN|
+Q|Semelle|Q||<input type="text" value="" name="Q" size="4" />|||MN|
+q_sol|Semelle|Contrainte admissible du sol(d&eacute;pend du type de sol)||<input type="text" value="" name="q_sol" size="4" />|||MPa|
+TypeCalc|Semelle|Type de calcul||D&eacute;bords homoth&eacute;tiques : <input type="radio" name="TypeCalc" value="1" checked/> - D&eacute;bords constants : <input type="radio" name="TypeCalc" value="2" />||||
+CondFis|Semelle|Conditions de fissure||<select name="CondFis"><option value="1" selected>FP</option><option value="2">FTP</option></select>||||
+MG|PoutreRectELU|Charges d'exploitation||<input type="text" value="" name="MG" size="4" />|Donn&eacute;es||KN.m|
+MQ|PoutreRectELU|Charges permanentes||<input type="text" value="" name="MQ" size="4" />|Donn&eacute;es||KN.m|
+b|PoutreRectELU|Largeur de la poutre||<input type="text" value="" name="b" size="4" />|Donn&eacute;es||m|
+h|PoutreRectELU|Hauteur de poutre||<input type="text" value="" name="h" size="4" />|Donn&eacute;es||m|
+e|PoutreRectELU|Enrobage de l'acier||<input type="text" value="" name="e" size="4" />|Donn&eacute;es||m|
+Fc28|PoutreRectELU|R&eacute;sistance caract&eacute;ristique du b&eacute;ton en compression||<input type="text" value="" name="Fc28" size="4" />|Donn&eacute;es||Mpa|
+Fe|PoutreRectELU|Limite d'&eacute;lasticit&eacute; de l'acier||<input type="text" value="" name="Fe" size="4" />|Donn&eacute;es||Mpa|
+MG|SectionRectFlexSimple|Charges d'exploitation||<input type="text" value="" name="MG" size="4" />|Donn&eacute;es||KN.m|
+MQ|SectionRectFlexSimple|Charges permanentes||<input type="text" value="" name="MQ" size="4" />|Donn&eacute;es||KN.m|
+b|SectionRectFlexSimple|Largeur de la poutre||<input type="text" value="" name="b" size="4" />|Donn&eacute;es||m|
+h|SectionRectFlexSimple|Hauteur de poutre||<input type="text" value="" name="h" size="4" />|Donn&eacute;es||m|
+e|SectionRectFlexSimple|Enrobage de l'acier||<input type="text" value="" name="e" size="4" />|Donn&eacute;es||m|
+d_p|SectionRectFlexSimple|d'||<input type="text" value="" name="d_p" size="4" />|Donn&eacute;es||m|
+Fc28|SectionRectFlexSimple|R&eacute;sistance caract&eacute;ristique du b&eacute;ton en compression||<input type="text" value="" name="Fc28" size="4" />|Donn&eacute;es||Mpa|
+Fe|SectionRectFlexSimple|Limite d'&eacute;lasticit&eacute; de l'acier||<input type="text" value="" name="Fe" size="4" />|Donn&eacute;es||Mpa|
+Gp|Dalle2Appuis|Charges (G) diverses||<input type="text" value="" name="Gp" size="4" />|||KN/m<sup>2</sup>|
+TypeTrav|Dalle2Appuis|Trav&eacute;e de rive||Oui : <input type="radio" value="oui" name="TypeTrav" size="4" /> - Non (intermediaire) : <input type="radio" value="non" name="TypeTrav" size="4"  checked/>||||
+ep|Dalle2Appuis|Epaisseur de la dalle||<input type="text" value="" name="ep" size="4" />|||m|
+FeE|Dalle2Appuis|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="FeE" size="4" />|||MPa|
+Fc28|Dalle2Appuis|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||MPa|
+Q|Dalle2Appuis|Charges d'exploitation Q||<input type="text" value="" name="Q" size="4" />|||KN/m<sup>2</sup>|
+C|Dalle2Appuis|Enrobage des aciers||<input type="text" value="" name="C" size="4" />|||cm|
+CoefMw|Dalle2Appuis|Coefficient Mw||<input type="text" value="" name="CoefMw" size="4" />|Coefficients||M0|
+M0Mw|Dalle2Appuis|Pour Mw, M0 pr&eacute;pond &agrave; :||<input type="text" value="" name="M0Mw" size="4" />|Coefficients||KN.m|
+CoefMe|Dalle2Appuis|Coefficient Me||<input type="text" value="" name="CoefMe" size="4" />|Coefficients||M0|
+M0Me|Dalle2Appuis|Pour Me, M0 pr&eacute;pond &agrave; :||<input type="text" value="" name="M0Me" size="4" />|Coefficients||KN.m|
+M0|Dalle2Appuis|Trav&eacute;e||<input type="text" value="" name="M0" size="4" />|Coefficients||KN.m|
+Lx|Dalle2Appuis|Lx||<input type="text" value="" name="Lx" size="4" />|Coordonn&eacute;es||m|
+Ly|Dalle2Appuis|Ly||<input type="text" value="" name="Ly" size="4" />|Coordonn&eacute;es||m|
+b|Tirant|Grand côt&eacute; du tirant||<input type="text" value="" name="b" size="4" />|||m|
+a|Tirant|Petit côt&eacute; du tirant||<input type="text" value="" name="a" size="4" />|||m|
+Fe|Tirant|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||Mpa|
+Fc28|Tirant|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||Mpa|
+Nser|Tirant|Effort de service||<input type="text" value="" name="Nser" size="4" />|||MN|
+G|Tirant|G||<input type="text" value="" name="G" size="4" />|||MN|
+Q|Tirant|Q||<input type="text" value="" name="Q" size="4" />|||MN|
+CondFis|Tirant|Conditions de fissure||<select name="CondFis"><option value="1" selected>FP</option><option value="2">FTP</option></select>||||
+fi|Tirant|fi||<input type="text" value="1.6" name="fi" size="4" />|Autres|||
+Ast|Tirant|Ast(pour les verifications)||<input type="text" value="4" name="Ast" size="4" />|Autres|||
+eh|Tirant|eh(pour les verifications)||<input type="text" value="3" name="eh" size="4" />|Autres|||
+At|Tirant|Section des aciers transversaux||<input type="text" value="0.57" name="At" size="4" />|D&eacute;termination des armatures transversales||mm|
+fi_l|Tirant|Diamètre des armatures tendues||<input type="text" value="16" name="fi_l" size="4" />|Choix d' une section commerciale||mm|
+lo|Escalier|Hauteur totale &agrave; franchir||<input type="text" value="" name="lo" size="4" />|||m|
+n1_m|Escalier|Nombre de marches||<input type="text" value="" name="n1_m" size="4" />||||
+nc|Escalier|Nombre de contremarches||<input type="text" value="" name="nc" size="4" />||||
+n1_e|Escalier|Emmarchement||<input type="text" value="" name="n1_e" size="4" />||||
+ep|Escalier|Epaisseur||<input type="text" value="" name="ep" size="4" />|||cm|
+pvb|Escalier|Poids volumique du b&eacute;ton||<input type="text" value="" name="pvb" size="4" />|||KN/m3|
+Fe|Escalier|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||MPa|
+Fc28|Escalier|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||Mpa|
+CondFis|Escalier|Conditions de fissuration||<select name="CondFis"><option value="1">Peu pr&eacute;judiciable</option></select>||||
+l|Escalier|Longueur de vol&eacute;e &eacute;tudi&eacute;e||<input type="text" value="" name="l" size="4" />|Autres||m|
+n|Escalier|Nombre de marches conçern&eacute;es||<input type="text" value="" name="n" size="4" />|Autres|||
+g|Escalier|Giron||<input type="text" value="28.5" name="g" size="4" />|Autres||cm|
+mu_l|Escalier|Moment r&eacute;duit ultime ( D&eacute;pend du type d'acier )||<input type="text" value="" name="mu_l" size="4" />|Autres|||
+b|PoutreTELU|Largeur de la table||<input type="text" value="" name="b" size="4" />|||m|
+bo|PoutreTELU|Largeur de la retomb&eacute;e||<input type="text" value="" name="bo" size="4" />|||m|
+ho|PoutreTELU|Hauteur de la table||<input type="text" value="" name="ho" size="4" />|||m|
+d|PoutreTELU|Hauteur utile des aciers tendus||<input type="text" value="" name="d" size="4" />|||m|
+G|PoutreTELU|G||<input type="text" value="" name="G" size="4" />||||
+Q|PoutreTELU|Q||<input type="text" value="" name="Q" size="4" />||||
+Fe|PoutreTELU|Contrainte de l'acier utilis&eacute;||<input type="text" value="" name="Fe" size="4" />|||Mpa|
+Fc28|PoutreTELU|Contrainte du b&eacute;ton &agrave; 28 jours||<input type="text" value="" name="Fc28" size="4" />|||Mpa|
+mu_l|PoutreTELU|Moment critique r&eacute;duit||<input type="text" value="" name="mu_l" size="4" />||||
